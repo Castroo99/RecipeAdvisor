@@ -66,7 +66,8 @@ namespace RecipeAdvisorBackend.ServucesImplementations
 
         public async Task GetRecipe(List<string> ingredients)
         {
-            await _client.GetRecipesAsync<string>(ingredients, recipeApiKey, recipeAppId, baseUri);
+            var recipeResponse = await _client.GetRecipesAsync<RecipeResponse>(ingredients, recipeApiKey, recipeAppId, baseUri);
+            ;
         }
     }
 }
