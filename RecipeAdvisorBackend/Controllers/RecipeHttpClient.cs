@@ -5,12 +5,12 @@ using Microsoft.AspNetCore.DataProtection.KeyManagement;
 
 namespace RecipeAdvisorBackend.Controllers
 {
-    public class RecipeClient
+    public class RecipeHttpClient
     {
         private readonly HttpClient _client;
         private const string JsonContentType = "application/json";
 
-        public RecipeClient(HttpClient? client = null)
+        public RecipeHttpClient(HttpClient? client = null)
         {
             if (client != null)
                 _client = client;
@@ -21,8 +21,16 @@ namespace RecipeAdvisorBackend.Controllers
         public async Task<T> GetRecipesAsync<T>(List<string> ingredients, string apiKey, string appId, string baseUri)
         {
             string ingredientsQuery = string.Join(", ", ingredients);
-            string requestUri = $"{baseUri}?type=public&q={ingredientsQuery}&app_id={appId}&app_key={apiKey}";
+            string requestUri = $"{baseUri}/recipes/v2?type=public&q={ingredientsQuery}&app_id={appId}&app_key={apiKey}";
 
+            HttpResponseMessage response = await _client.GetAsync(requestUri);
+            await EnsureSuccessAsync(response);
+            var json = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(json);
+        }
+
+        public async Task<T> GetIngredientsAsync<T>(string requestUri)
+        {
             HttpResponseMessage response = await _client.GetAsync(requestUri);
             await EnsureSuccessAsync(response);
             var json = await response.Content.ReadAsStringAsync();

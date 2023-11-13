@@ -2,6 +2,8 @@ using Google.Cloud.Dialogflow.V2;
 using Google.Protobuf;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using RecipeAdvisorBackend.Model;
 using RecipeAdvisorBackend.ServicesInterfaces;
 using System.Text;
 
@@ -26,6 +28,22 @@ namespace RecipeAdvisorBackend.Controllers
         public IActionResult GetStatus()
         {
             return Ok("Ok");
+        }
+
+        [HttpGet("Ingredients")]
+        public async Task<IActionResult> GetIngredients()
+        {
+            try
+            {
+                await _serviceRecipes.GetIngredients();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while getting ingredients");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+            return Ok();
         }
 
         public async Task<IActionResult> GetWebhookResponse()
