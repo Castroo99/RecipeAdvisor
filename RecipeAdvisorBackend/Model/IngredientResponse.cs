@@ -6,6 +6,7 @@ namespace RecipeAdvisorBackend.Model
     {
         [JsonProperty("hints")]
         public List<Hint> Hints { get; set; }
+
         [JsonProperty("_links")]
         public Links Links { get; set; }
     }
@@ -20,6 +21,7 @@ namespace RecipeAdvisorBackend.Model
     {
         [JsonProperty("foodId")]
         public string FoodId { get; set; }
+
         [JsonProperty("label")]
         public string Label { get; set; }
     }
@@ -34,6 +36,7 @@ namespace RecipeAdvisorBackend.Model
     {
         [JsonProperty("title")]
         public string Title { get; set; }
+
         [JsonProperty("href")]
         public string Href { get; set; }
     }

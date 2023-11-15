@@ -1,144 +1,106 @@
-﻿namespace RecipeAdvisorBackend.Model
+﻿using Newtonsoft.Json;
+
+namespace RecipeAdvisorBackend.Model
 {
     public class RecipeResponse
     {
-        public int from { get; set; }
-        public int to { get; set; }
-        public int count { get; set; }
-        public _Links _links { get; set; }
-        public Hit[] hits { get; set; }
-    }
+        [JsonProperty("from")]
+        public int From { get; set; }
 
-    public class _Links
-    {
-        public Self self { get; set; }
-        public Next next { get; set; }
-    }
+        [JsonProperty("to")]
+        public int To { get; set; }
 
-    public class Self
-    {
-        public string href { get; set; }
-        public string title { get; set; }
+        [JsonProperty("count")]
+        public int Count { get; set; }
+
+        [JsonProperty("_links")]
+        public Links Links { get; set; }
+
+        [JsonProperty("hits")]
+        public Hit[] Hits { get; set; }
     }
 
     public class Hit
     {
-        public Recipe recipe { get; set; }
-        public _Links1 _links { get; set; }
+        [JsonProperty("recipe")]
+        public Recipe Recipe { get; set; }
     }
 
     public class Recipe
     {
-        public string uri { get; set; }
-        public string label { get; set; }
-        public string image { get; set; }
-        public Images images { get; set; }
-        public string source { get; set; }
-        public string url { get; set; }
-        public string shareAs { get; set; }
-        public float yield { get; set; }
-        public string[] dietLabels { get; set; }
-        public string[] healthLabels { get; set; }
-        public string[] cautions { get; set; }
-        public string[] ingredientLines { get; set; }
-        public Ingredients[] ingredients { get; set; }
-        public float calories { get; set; }
-        public float glycemicIndex { get; set; }
-        public float totalCO2Emissions { get; set; }
-        public string co2EmissionsClass { get; set; }
-        public float totalWeight { get; set; }
-        public string[] cuisineType { get; set; }
-        public string[] mealType { get; set; }
-        public string[] dishType { get; set; }
-        public string[] instructions { get; set; }
-        public string[] tags { get; set; }
-        public string externalId { get; set; }
-        public Totalnutrients totalNutrients { get; set; }
-        public Totaldaily totalDaily { get; set; }
-        public Digest[] digest { get; set; }
-    }
+        [JsonProperty("uri")]
+        public string Uri { get; set; }
 
-    public class Images
-    {
-        public THUMBNAIL THUMBNAIL { get; set; }
-        public SMALL SMALL { get; set; }
-        public REGULAR REGULAR { get; set; }
-        public LARGE LARGE { get; set; }
-    }
+        [JsonProperty("label")]
+        public string Label { get; set; }
 
-    public class THUMBNAIL
-    {
-        public string url { get; set; }
-        public int width { get; set; }
-        public int height { get; set; }
-    }
+        [JsonProperty("image")]
+        public string Image { get; set; }
 
-    public class SMALL
-    {
-        public string url { get; set; }
-        public int width { get; set; }
-        public int height { get; set; }
-    }
+        [JsonProperty("source")]
+        public string Source { get; set; }
 
-    public class REGULAR
-    {
-        public string url { get; set; }
-        public int width { get; set; }
-        public int height { get; set; }
-    }
+        [JsonProperty("url")]
+        public string Url { get; set; }
 
-    public class LARGE
-    {
-        public string url { get; set; }
-        public int width { get; set; }
-        public int height { get; set; }
-    }
+        [JsonProperty("shareAs")]
+        public string ShareAs { get; set; }
 
-    public class Totalnutrients
-    {
-    }
+        [JsonProperty("yield")]
+        public float Yield { get; set; }
 
-    public class Totaldaily
-    {
+        [JsonProperty("dietLabels")]
+        public string[] DietLabels { get; set; }
+
+        [JsonProperty("healthLabels")]
+        public string[] HealthLabels { get; set; }
+
+        [JsonProperty("cautions")]
+        public string[] Cautions { get; set; }
+
+        [JsonProperty("ingredientLines")]
+        public string[] IngredientLines { get; set; }
+
+        [JsonProperty("ingredients")]
+        public Ingredients[] Ingredients { get; set; }
+
+        [JsonProperty("calories")]
+        public float Calories { get; set; }
+
+        [JsonProperty("glycemicIndex")]
+        public float GlycemicIndex { get; set; }
+
+        [JsonProperty("cuisineType")]
+        public string[] CuisineType { get; set; }
+
+        [JsonProperty("mealType")]
+        public string[] MealType { get; set; }
+
+        [JsonProperty("dishType")]
+        public string[] DishType { get; set; }
+
+        [JsonProperty("instructions")]
+        public string[] Instructions { get; set; }
     }
 
     public class Ingredients
     {
-        public string text { get; set; }
-        public float quantity { get; set; }
-        public string measure { get; set; }
-        public string food { get; set; }
-        public float weight { get; set; }
-        public string foodId { get; set; }
-    }
+        [JsonProperty("text")]
+        public string Text { get; set; }
 
-    public class Digest
-    {
-        public string label { get; set; }
-        public string tag { get; set; }
-        public string schemaOrgTag { get; set; }
-        public float total { get; set; }
-        public bool hasRDI { get; set; }
-        public float daily { get; set; }
-        public string unit { get; set; }
-    }
+        [JsonProperty("quantity")]
+        public float Quantity { get; set; }
 
-    public class _Links1
-    {
-        public Self1 self { get; set; }
-        public Next1 next { get; set; }
-    }
+        [JsonProperty("measure")]
+        public string Measure { get; set; }
 
-    public class Self1
-    {
-        public string href { get; set; }
-        public string title { get; set; }
-    }
+        [JsonProperty("food")]
+        public string Food { get; set; }
 
-    public class Next1
-    {
-        public string href { get; set; }
-        public string title { get; set; }
-    }
+        [JsonProperty("weight")]
+        public float Weight { get; set; }
 
+        [JsonProperty("foodId")]
+        public string FoodId { get; set; }
+    }
 }

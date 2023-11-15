@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json.Converters;
-using Newtonsoft.Json;
-using System;
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
+﻿using Newtonsoft.Json;
 
 namespace RecipeAdvisorBackend.Controllers
 {

@@ -1,4 +1,3 @@
-
 using RecipeAdvisorBackend.ServicesInterfaces;
 using RecipeAdvisorBackend.ServucesImplementations;
 
@@ -9,7 +8,7 @@ namespace RecipeAdvisorBackend
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            
+
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -30,7 +29,6 @@ namespace RecipeAdvisorBackend
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

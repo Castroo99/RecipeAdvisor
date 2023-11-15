@@ -1,13 +1,9 @@
 using Google.Cloud.Dialogflow.V2;
 using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using RecipeAdvisorBackend.Model;
 using RecipeAdvisorBackend.ServicesInterfaces;
 using System.Text;
-using static Google.Rpc.Context.AttributeContext.Types;
 
 namespace RecipeAdvisorBackend.Controllers
 {
@@ -15,7 +11,6 @@ namespace RecipeAdvisorBackend.Controllers
     [Route("[controller]")]
     public class WebHookController : ControllerBase
     {
-
         private readonly ILogger<WebHookController> _logger;
         private static readonly JsonParser jsonParser = new JsonParser(JsonParser.Settings.Default.WithIgnoreUnknownFields(true));
         private readonly IServiceRecipes _serviceRecipes;

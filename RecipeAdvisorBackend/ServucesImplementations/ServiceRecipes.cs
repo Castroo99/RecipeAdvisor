@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using RecipeAdvisorBackend.Controllers;
 using RecipeAdvisorBackend.Model;
 using RecipeAdvisorBackend.ServicesInterfaces;
-using static Google.Apis.Requests.BatchRequest;
 
 namespace RecipeAdvisorBackend.ServucesImplementations
 {
