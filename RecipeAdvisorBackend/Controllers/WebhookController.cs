@@ -52,8 +52,7 @@ namespace RecipeAdvisorBackend.Controllers
             {
                 requestJson = await reader.ReadToEndAsync();
             }
-            var requestParser = new Google.Protobuf.JsonParser(Google.Protobuf.JsonParser.Settings.Default.WithIgnoreUnknownFields(true));
-            WebhookRequest request = requestParser.Parse<WebhookRequest>(requestJson);
+            WebhookRequest request = jsonParser.Parse<WebhookRequest>(requestJson);
 
             var parameters = request.QueryResult.Parameters;
             parameters.Fields.TryGetValue("ingredients", out Value ingredients);

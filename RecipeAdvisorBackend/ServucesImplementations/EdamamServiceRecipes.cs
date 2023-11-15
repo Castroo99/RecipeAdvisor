@@ -5,7 +5,7 @@ using RecipeAdvisorBackend.ServicesInterfaces;
 
 namespace RecipeAdvisorBackend.ServucesImplementations
 {
-    public class ServiceRecipes : IServiceRecipes
+    public class EdamamServiceRecipes : IServiceRecipes
     {
         private readonly RecipeHttpClient _client = new RecipeHttpClient();
         private readonly IConfiguration _configuration;
@@ -15,7 +15,7 @@ namespace RecipeAdvisorBackend.ServucesImplementations
         private readonly string? foodAppId;
         private readonly string? baseUri;
 
-        public ServiceRecipes(IConfiguration configuration)
+        public EdamamServiceRecipes(IConfiguration configuration)
         {
             _configuration = configuration;
 
@@ -62,10 +62,9 @@ namespace RecipeAdvisorBackend.ServucesImplementations
             File.WriteAllText(filePath, json);
         }
 
-        public async Task GetRecipe(List<string> ingredients)
+        public async Task<RecipeResponse> GetRecipe(List<string> ingredients)
         {
-            var recipeResponse = await _client.GetRecipesAsync<RecipeResponse>(ingredients, recipeApiKey, recipeAppId, baseUri);
-            ;
+            return await _client.GetRecipesAsync<RecipeResponse>(ingredients, recipeApiKey, recipeAppId, baseUri);
         }
     }
 }
