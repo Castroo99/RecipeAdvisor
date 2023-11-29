@@ -62,9 +62,9 @@ namespace RecipeAdvisorBackend.ServucesImplementations
             File.WriteAllText(filePath, json);
         }
 
-        public async Task<RecipeResponse> GetRecipe(List<string> ingredients)
+        public async Task<RecipeResponse> GetRecipe(List<string> dietType, List<string> healthLabels, string mealType, List<string> ingredients)
         {
-            return await _client.GetRecipesAsync<RecipeResponse>(ingredients, recipeApiKey, recipeAppId, baseUri);
+            return await _client.GetRecipesAsync<RecipeResponse>(dietType, healthLabels, mealType, ingredients, recipeApiKey, recipeAppId, baseUri);
         }
     }
 }

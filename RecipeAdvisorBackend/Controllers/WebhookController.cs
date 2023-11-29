@@ -2,6 +2,7 @@ using Google.Cloud.Dialogflow.V2;
 using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Mvc;
+using RecipeAdvisorBackend.Model;
 using RecipeAdvisorBackend.ServicesInterfaces;
 using System.Text;
 
@@ -47,25 +48,38 @@ namespace RecipeAdvisorBackend.Controllers
         public async Task<IActionResult> GetWebhookResponse()
         {
             _logger.LogInformation("Webhook request received");
-            string requestJson;
-            using (TextReader reader = new StreamReader(Request.Body))
+            try
             {
-                requestJson = await reader.ReadToEndAsync();
+                string requestJson;
+                using (TextReader reader = new StreamReader(Request.Body))
+                {
+                    requestJson = await reader.ReadToEndAsync();
+                }
+                WebhookRequest request = jsonParser.Parse<WebhookRequest>(requestJson);
+                var context = request.QueryResult.OutputContexts.FirstOrDefault(o => o.ContextName.ContextId == "getdiet-followup");
+                var parameters = context.Parameters;
+                parameters.Fields.TryGetValue("diet_type", out Value dietTypeValue);
+                parameters.Fields.TryGetValue("health_labels", out Value healthLabelsValue);
+                parameters.Fields.TryGetValue("meal_type", out Value mealTypeValue);
+                parameters.Fields.TryGetValue("ingredients", out Value ingredientsValue);
+                List<string> dietTypeList = dietTypeValue.ListValue.Values.Select(v => v.StringValue).ToList();
+                List<string> healthLabelsList = healthLabelsValue.ListValue.Values.Select(v => v.StringValue).ToList();
+                string mealType = mealTypeValue.ListValue.Values.Select(v => v.StringValue).FirstOrDefault();
+                List<string> ingredientsList = ingredientsValue.ListValue.Values.Select(v => v.StringValue).ToList();
+
+                RecipeResponse recipe = await _serviceRecipes.GetRecipe(dietTypeList, healthLabelsList, mealType, ingredientsList);
+
+                var response = new WebhookResponse();
+
+                response.FulfillmentText = $"Here is the recipe {recipe.Hits.FirstOrDefault()?.Recipe?.Label}: \n Ingredients: {string.Join("\n", ingredientsList)}.\n Instructions: {recipe.Hits[0].Recipe.ShareAs}";
+
+                return Ok(response);
             }
-            WebhookRequest request = jsonParser.Parse<WebhookRequest>(requestJson);
-
-            var parameters = request.QueryResult.Parameters;
-            parameters.Fields.TryGetValue("ingredients", out Value ingredients);
-            List<string> ingredientsList = ingredients.ListValue.Values.Select(v => v.StringValue).ToList();
-
-            await _serviceRecipes.GetRecipe(ingredientsList);
-
-            var response = new WebhookResponse();
-            StringBuilder sb = new StringBuilder();
-
-            response.FulfillmentText = sb.ToString();
-
-            return Ok(response);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while getting webhook response");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }
