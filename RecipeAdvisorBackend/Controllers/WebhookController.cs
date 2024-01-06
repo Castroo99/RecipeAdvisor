@@ -71,9 +71,18 @@ namespace RecipeAdvisorBackend.Controllers
 
                 var response = new WebhookResponse();
 
-                response.FulfillmentText = $"Here is the recipe {recipe.Hits.FirstOrDefault()?.Recipe?.Label}.\nIngredients: {string.Join(",\n", ingredientsList)}.\n Instructions: {recipe.Hits[0].Recipe.ShareAs}";
+                if (recipe.Hits is null || recipe.Hits.Length == 0)
+                {
+                    response.FulfillmentText = "Sorry, I couldn't find any recipe with these ingredients.";
+                    
+                    return Ok(response);
+                }
+                else
+                {
+                    response.FulfillmentText = $"Here is the recipe {recipe.Hits.FirstOrDefault()?.Recipe?.Label}.\nIngredients: {string.Join(",\n", ingredientsList)}.\n Instructions: {recipe.Hits[0].Recipe.ShareAs}";
 
-                return Ok(response);
+                    return Ok(response);
+                }
             }
             catch (Exception ex)
             {
