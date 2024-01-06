@@ -71,7 +71,7 @@ namespace RecipeAdvisorBackend.Controllers
 
                 var response = new WebhookResponse();
 
-                response.FulfillmentText = $"Here is the recipe {recipe.Hits.FirstOrDefault()?.Recipe?.Label}: \n Ingredients: {string.Join("\n", ingredientsList)}.\n Instructions: {recipe.Hits[0].Recipe.ShareAs}";
+                response.FulfillmentText = $"Here is the recipe {recipe.Hits.FirstOrDefault()?.Recipe?.Label}.\nIngredients: {string.Join(",\n", ingredientsList)}.\n Instructions: {recipe.Hits[0].Recipe.ShareAs}";
 
                 return Ok(response);
             }
